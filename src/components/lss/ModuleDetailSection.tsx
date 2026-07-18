@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { modules, phaseColors, type Module } from "@/lib/course-data";
 import { useLearningStore } from "@/lib/store";
+import { VideoPlayer } from "./VideoPlayer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,8 @@ import {
   ChevronRight, Trophy, RotateCcw, ExternalLink,
   Target, Ruler, FlaskConical, Beaker, Lightbulb, Activity,
   Search, FileText, GitBranch, MessageSquare, BarChart3,
-  Gauge, Brain, Cuboid, Workflow, Users, PenTool
+  Gauge, Brain, Cuboid, Workflow, Users, PenTool, Maximize2,
+  Timer, EyeOff,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -27,20 +29,86 @@ const iconMap: Record<string, React.ElementType> = {
 export function ModuleDetailSection() {
   const {
     activeModuleId, setSection, moduleProgress, saveQuizAnswer,
-    markModuleComplete, getModuleProgress, markVideoWatched,
+    markModuleComplete, getModuleProgress, toggleVideoWatched,
+    setActiveVideo, videoResumePositions,
   } = useLearningStore();
   const [activeTab, setActiveTab] = useState("content");
   const [quizState, setQuizState] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
+
+  // Quiz timer state
+  const QUIZ_TIME_PER_QUESTION = 60;
+  const [quizTimeLeft, setQuizTimeLeft] = useState(0);
+  const [quizTimerActive, setQuizTimerActive] = useState(false);
+  const [quizTabHidden, setQuizTabHidden] = useState(false);
+  const quizTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeModule = useMemo(() => modules.find((m) => m.id === activeModuleId), [activeModuleId]);
   const mp = activeModuleId ? getModuleProgress(activeModuleId) : null;
   const phaseColor = activeModule ? phaseColors[activeModule.phase] : phaseColors.define;
   const Icon = activeModule ? (iconMap[activeModule.icon] || BookOpen) : BookOpen;
 
+  const quizScore = activeModule ? activeModule.quizQuestions.filter((q) => quizState[q.id] === q.correctIndex).length : 0;
+  const quizTotal = activeModule ? activeModule.quizQuestions.length : 0;
+  const quizPercent = quizTotal > 0 ? Math.round((quizScore / quizTotal) * 100) : 0;
+
+  // Quiz timer
+  const clearQuizTimer = useCallback(() => {
+    if (quizTimerRef.current) { clearInterval(quizTimerRef.current); quizTimerRef.current = null; }
+  }, []);
+
+  const startQuizTimer = useCallback((seconds: number) => {
+    clearQuizTimer();
+    setQuizTimeLeft(seconds);
+    setQuizTimerActive(true);
+    quizTimerRef.current = setInterval(() => {
+      setQuizTimeLeft((prev) => {
+        if (prev <= 1) { clearQuizTimer(); setQuizTimerActive(false); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  }, [clearQuizTimer]);
+
+  // Auto-submit when quiz timer hits 0
+  useEffect(() => {
+    if (quizTimeLeft === 0 && quizTimerActive && !showResults && activeTab === "quiz" && activeModule) {
+      handleQuizSubmit();
+    }
+  }, [quizTimeLeft, quizTimerActive, showResults, activeTab]);
+
+  // Focus detection for quiz timer
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden && quizTimerActive) {
+        setQuizTabHidden(true);
+      } else if (!document.hidden && quizTimerActive && !showResults) {
+        setQuizTabHidden(false);
+        startQuizTimer(quizTimeLeft); // Reset timer on refocus
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [quizTimerActive, quizTimeLeft, showResults, startQuizTimer]);
+
+  // Start/reset quiz timer when switching to quiz tab
+  useEffect(() => {
+    if (activeTab === "quiz" && !showResults && quizTotal > 0 && !quizTimerActive) {
+      startQuizTimer(quizTotal * QUIZ_TIME_PER_QUESTION);
+    }
+    if (activeTab !== "quiz") {
+      clearQuizTimer();
+      setQuizTimerActive(false);
+    }
+  }, [activeTab, showResults, quizTotal]);
+
+  // Cleanup
+  useEffect(() => clearQuizTimer, [clearQuizTimer]);
+
   if (!activeModule) return null;
 
   const handleQuizSubmit = () => {
+    clearQuizTimer();
+    setQuizTimerActive(false);
     if (activeModule) {
       activeModule.quizQuestions.forEach((q) => {
         const answer = quizState[q.id];
@@ -55,11 +123,9 @@ export function ModuleDetailSection() {
   const resetQuiz = () => {
     setQuizState({});
     setShowResults(false);
+    clearQuizTimer();
+    setQuizTimerActive(false);
   };
-
-  const quizScore = activeModule.quizQuestions.filter((q) => quizState[q.id] === q.correctIndex).length;
-  const quizTotal = activeModule.quizQuestions.length;
-  const quizPercent = quizTotal > 0 ? Math.round((quizScore / quizTotal) * 100) : 0;
 
   return (
     <section className="py-4 sm:py-8">
@@ -281,10 +347,24 @@ export function ModuleDetailSection() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Card className="border-border/50">
                 <CardContent className="p-6 sm:p-8">
-                  <div className="flex items-center justify-between mb-6">
+                  {/* Focus lost warning */}
+                  <AnimatePresence>
+                    {quizTabHidden && (
+                      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                        className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-3">
+                        <EyeOff className="w-5 h-5 text-amber-400 shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-amber-400">Focus lost — timer will reset</p>
+                          <p className="text-xs text-muted-foreground">Stay on this tab to continue the quiz.</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-lg font-bold">Knowledge Check</h3>
-                      <p className="text-sm text-muted-foreground">{quizTotal} questions · {activeModule.difficulty || activeModule.belt} level</p>
+                      <p className="text-sm text-muted-foreground">{quizTotal} questions · {activeModule.belt} belt level</p>
                     </div>
                     {showResults && (
                       <div className="flex items-center gap-2">
@@ -297,6 +377,43 @@ export function ModuleDetailSection() {
                       </div>
                     )}
                   </div>
+
+                  {/* Quiz timer */}
+                  {!showResults && quizTimerActive && (
+                    <div className="mb-6 space-y-2">
+                      <div className={`flex items-center justify-between p-2 rounded-lg border transition-all ${
+                        quizTimeLeft <= 30 ? "bg-red-500/10 border-red-500/30" :
+                        quizTimeLeft <= 60 ? "bg-amber-500/10 border-amber-500/30" :
+                        "bg-emerald-500/10 border-emerald-500/30"
+                      }`}>
+                        <div className="flex items-center gap-2">
+                          <Timer className={`w-4 h-4 ${
+                            quizTimeLeft <= 30 ? "text-red-400" : quizTimeLeft <= 60 ? "text-amber-400" : "text-emerald-400"
+                          }`} />
+                          <span className={`text-sm font-mono font-bold ${
+                            quizTimeLeft <= 30 ? "text-red-400" : quizTimeLeft <= 60 ? "text-amber-400" : "text-emerald-400"
+                          }`}>
+                            {Math.floor(quizTimeLeft / 60)}:{(quizTimeLeft % 60).toString().padStart(2, "0")}
+                          </span>
+                          {quizTimeLeft <= 30 && quizTimeLeft > 0 && (
+                            <span className="text-[10px] text-red-400/70 animate-pulse">Hurry up!</span>
+                          )}
+                          {quizTimeLeft === 0 && <span className="text-[10px] text-red-400">Time's up!</span>}
+                        </div>
+                        <span className="text-[10px] text-muted-foreground">
+                          {QUIZ_TIME_PER_QUESTION}s per question
+                        </span>
+                      </div>
+                      <div className="h-1 rounded-full bg-secondary overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full transition-colors"
+                          style={{ backgroundColor: quizTimeLeft <= 30 ? "#ef4444" : quizTimeLeft <= 60 ? "#f59e0b" : "#22c55e" }}
+                          animate={{ width: `${(quizTimeLeft / (quizTotal * QUIZ_TIME_PER_QUESTION)) * 100}%` }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <div className="space-y-6">
                     {activeModule.quizQuestions.map((q, qi) => {
@@ -390,54 +507,135 @@ export function ModuleDetailSection() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Card className="border-border/50">
                 <CardContent className="p-6 sm:p-8">
-                  <h3 className="text-lg font-bold mb-1">Video Lessons</h3>
-                  <p className="text-sm text-muted-foreground mb-6">Curated video resources from top Six Sigma educators.</p>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-lg font-bold">Video Lessons</h3>
+                      <p className="text-sm text-muted-foreground">Curated video resources from top Six Sigma educators.</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {mp?.videoWatched?.length || 0}/{activeModule.videos.length} watched
+                    </div>
+                  </div>
 
-                  <div className="space-y-4">
-                    {activeModule.videos.map((video, vi) => {
-                      const isWatched = mp?.videoWatched?.includes(video.youtubeId);
-                      return (
-                        <motion.div
-                          key={vi}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: vi * 0.1 }}
-                          className="rounded-xl border border-border/30 overflow-hidden"
+                  {/* First video - large player */}
+                  {activeModule.videos.length > 0 && (
+                    <div className="mb-6">
+                      <VideoPlayer
+                        key={activeModule.videos[0].youtubeId}
+                        youtubeId={activeModule.videos[0].youtubeId}
+                        moduleId={activeModule.id}
+                        title={activeModule.videos[0].title}
+                      />
+                      <div className="mt-3 flex items-start justify-between gap-3">
+                        <div>
+                          <h4 className="text-sm font-semibold">{activeModule.videos[0].title}</h4>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                            <Clock className="w-3 h-3" />
+                            {activeModule.videos[0].duration}
+                            <span className="text-muted-foreground/30">·</span>
+                            {activeModule.videos[0].channel}
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setActiveVideo(activeModule.videos[0].youtubeId, activeModule.id)}
+                          className="shrink-0 gap-1.5"
                         >
-                          <div className="aspect-video bg-black/50 relative">
-                            <iframe
-                              className="w-full h-full"
-                              src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
-                              title={video.title}
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            />
-                          </div>
-                          <div className="p-4">
-                            <h4 className="text-sm font-semibold mb-1">{video.title}</h4>
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {video.duration}
-                              </span>
-                              <span>{video.channel}</span>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-6 px-2 text-xs ml-auto"
-                                onClick={() => markVideoWatched(activeModule.id, video.youtubeId)}
-                              >
-                                {isWatched ? (
-                                  <><CheckCircle2 className="w-3 h-3 mr-1 text-emerald-500" /> Watched</>
-                                ) : (
-                                  "Mark Watched"
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span className="hidden sm:inline">Full View</span>
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Remaining videos */}
+                  {activeModule.videos.length > 1 && (
+                    <>
+                      <Separator className="mb-6" />
+                      <div className="space-y-3">
+                        {activeModule.videos.slice(1).map((video, vi) => {
+                          const isWatched = mp?.videoWatched?.includes(video.youtubeId);
+                          const vProgress = mp?.videoProgress?.[video.youtubeId] || 0;
+                          return (
+                            <motion.button
+                              key={vi}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: vi * 0.05 }}
+                              onClick={() => setActiveVideo(video.youtubeId, activeModule.id)}
+                              className="w-full text-left rounded-xl border border-border/30 overflow-hidden hover:border-border/60 transition-all group flex gap-4 p-3"
+                            >
+                              {/* Thumbnail */}
+                              <div className="relative w-40 sm:w-48 aspect-video rounded-lg overflow-hidden bg-secondary shrink-0">
+                                <img
+                                  src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
+                                  alt=""
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center">
+                                    <Play className="w-4 h-4 text-black fill-black ml-0.5" />
+                                  </div>
+                                </div>
+                                {isWatched && (
+                                  <div className="absolute top-1.5 right-1.5 bg-emerald-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                                    <CheckCircle2 className="w-2.5 h-2.5" />
+                                    Done
+                                  </div>
                                 )}
-                              </Button>
-                            </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+                                {!isWatched && vProgress > 0 && (
+                                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/40">
+                                    <div className="h-full bg-rose-500" style={{ width: `${vProgress}%` }} />
+                                  </div>
+                                )}
+                                <div className="absolute bottom-1 right-1 bg-black/80 text-[9px] text-white/90 px-1 py-0.5 rounded font-mono">
+                                  {video.duration}
+                                </div>
+                              </div>
+
+                              <div className="flex-1 min-w-0 py-1">
+                                <h4 className="text-sm font-semibold line-clamp-2 group-hover:text-rose-400 transition-colors mb-1">
+                                  {video.title}
+                                </h4>
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <Clock className="w-3 h-3" />
+                                  {video.duration}
+                                  <span className="text-muted-foreground/30">·</span>
+                                  {video.channel}
+                                </div>
+                                {vProgress > 0 && !isWatched && (
+                                  <div className="mt-2 flex items-center gap-2">
+                                    <div className="h-1 flex-1 max-w-[120px] rounded-full bg-secondary overflow-hidden">
+                                      <div className="h-full bg-rose-500 rounded-full" style={{ width: `${vProgress}%` }} />
+                                    </div>
+                                    <span className="text-[10px] text-muted-foreground">{Math.round(vProgress)}%</span>
+                                  </div>
+                                )}
+                              </div>
+                            </motion.button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+
+                  {/* Open in full view */}
+                  <div className="mt-6 flex justify-center">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        if (activeModule.videos.length > 0) {
+                          setActiveVideo(activeModule.videos[0].youtubeId, activeModule.id);
+                        }
+                      }}
+                      className="gap-1.5"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
+                      Open in Full Player View
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

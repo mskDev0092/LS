@@ -80,9 +80,9 @@ The DMAIC cycle (Define, Measure, Analyze, Improve, Control) is the core problem
 - 6σ = 3.4 DPMO (99.99966% yield)`,
     tools: ["CTQ Drilldown Tree", "Project Charter", "SIPOC Diagram"],
     videos: [
-      { title: "What is Six Sigma? Complete Beginner's Guide", youtubeId: "eVUePILyZXU", duration: "11:24", channel: "Simplilearn" },
-      { title: "Six Sigma In 8 Minutes | What Is Six Sigma?", youtubeId: "o3TqSKmf3Hs", duration: "8:12", channel: "Simplilearn" },
-      { title: "Lean Six Sigma Explained", youtubeId: "NJqq5mXpWOs", duration: "6:44", channel: "Process Improvement" },
+      { title: "Basics of Six Sigma | Six Sigma Basic Training for Beginners", youtubeId: "P9YMWY-I5Yk", duration: "15:24", channel: "Simplilearn" },
+      { title: "Six Sigma In 9 Minutes | What Is Six Sigma?", youtubeId: "4EDYfSl-fmc", duration: "9:45", channel: "Simplilearn" },
+      { title: "Lean Six Sigma In 8 Minutes | What Is Lean Six Sigma?", youtubeId: "s2HCrhNVfak", duration: "8:12", channel: "Simplilearn" },
     ],
     quizQuestions: [
       {
@@ -147,8 +147,8 @@ The DMAIC cycle (Define, Measure, Analyze, Improve, Control) is the core problem
 Each CTQ must be Specific, Measurable, Attainable, Relevant, and Time-bound (SMART).`,
     tools: ["Kano Model", "CTQ Drilldown Tree", "Affinity Diagram", "Customer Journey Map"],
     videos: [
-      { title: "Voice of Customer (VOC) | Six Sigma", youtubeId: "LMDnSZB4uJE", duration: "8:31", channel: "Lean Six Sigma Academy" },
-      { title: "Kano Model Explained", youtubeId: "mXy7pSRdXgc", duration: "9:15", channel: "Quality Gurus" },
+      { title: "Voice of Customer (VOC) | Six Sigma", youtubeId: "yQTKLLibzEg", duration: "6:31", channel: "Learn LEAN Six Sigma FREE" },
+      { title: "Kano Model - Implementations & Customer Satisfaction", youtubeId: "ZT8lnHGay_8", duration: "9:15", channel: "QualityGurus" },
     ],
     quizQuestions: [
       {
@@ -207,8 +207,8 @@ Each CTQ must be Specific, Measurable, Attainable, Relevant, and Time-bound (SMA
 **Stakeholder Analysis**: A power-interest grid maps stakeholders by their influence (power) and vested interest. High-power, high-interest stakeholders require active management and regular communication. Low-power, high-interest stakeholders need to be kept informed. This analysis shapes the communication plan.`,
     tools: ["Project Charter Template", "Stakeholder Analysis Matrix", "SIPOC Diagram", "Communication Plan"],
     videos: [
-      { title: "How to Write a Six Sigma Project Charter", youtubeId: "rJ6yR-E8YqM", duration: "10:02", channel: "Six Sigma Tutor" },
-      { title: "Project Charter: Problem & Goal Statements", youtubeId: "OGCTjLx0qJk", duration: "7:48", channel: "Lean Six Sigma Academy" },
+      { title: "Introduction to the Lean Six Sigma Project Charter", youtubeId: "QMp5MDAgghc", duration: "10:02", channel: "Six Sigma Development Solutions Inc." },
+      { title: "Project Charter: The Critical Foundation Every Project Needs to Succeed", youtubeId: "v33MyHxc7p4", duration: "13:21", channel: "LEARN & APPLY : Lean and Six Sigma" },
     ],
     quizQuestions: [
       {
@@ -274,8 +274,8 @@ The SIPOC ensures all team members share a common understanding of process bound
 - Value-Added vs. Non-Value-Added Time: Only steps that transform the product/service toward customer requirements are value-added (typically <25% of total lead time in most processes)`,
     tools: ["SIPOC Diagram", "Process Flowchart", "Swimlane Diagram", "Spaghetti Diagram"],
     videos: [
-      { title: "SIPOC Diagram Explained | Six Sigma", youtubeId: "yOoXyMHLoEg", duration: "7:22", channel: "Lean Six Sigma Academy" },
-      { title: "Process Mapping for Six Sigma Projects", youtubeId: "U5LA6_YwqSs", duration: "9:47", channel: "Quality Gurus" },
+      { title: "Master SIPOC Diagrams: 5 Steps to Process Perfection", youtubeId: "zn5qnS-iSW4", duration: "12:15", channel: "Rahul Iyer | AIGPE®" },
+      { title: "Six Sigma Process Mapping Explained", youtubeId: "mbaYoxVvJNU", duration: "12:00", channel: "Invensis Learning" },
     ],
     quizQuestions: [
       {
@@ -345,8 +345,8 @@ For pass/fail or categorical data, use Attribute Agreement Analysis (also called
 - Appraiser vs. Standard agreement (accuracy)`,
     tools: ["Gage R&R Study", "Bias & Linearity Study", "Attribute Agreement Analysis", "Control Chart for Stability"],
     videos: [
-      { title: "Measurement System Analysis (MSA) Explained", youtubeId: "cTe3V7jKu5I", duration: "12:18", channel: "Lean Six Sigma Academy" },
-      { title: "Gage R&R Study Step by Step", youtubeId: "s_E3BW2M0Zk", duration: "15:33", channel: "Quality Gurus" },
+      { title: "Measurement System Analysis (MSA) Explained", youtubeId: "k8NLd5linfw", duration: "15:42", channel: "LEARN & APPLY : Lean and Six Sigma" },
+      { title: "GRR - Gage R&R Study (Crossed): MSA Tools with Examples", youtubeId: "6sRN1lCTqSM", duration: "18:24", channel: "LEARN & APPLY : Lean and Six Sigma" },
     ],
     quizQuestions: [
       {
@@ -414,8 +414,8 @@ For estimating a mean: n = (Z × σ / E)² where Z = Z-score for desired confide
 For estimating a proportion: n = (Z² × p × (1-p)) / E² where p = estimated proportion.`,
     tools: ["Histogram", "Box Plot", "Normal Probability Plot", "Descriptive Statistics Summary"],
     videos: [
-      { title: "Statistics for Six Sigma — Complete Course", youtubeId: "zZMIMaKR0mo", duration: "18:42", channel: "Lean Six Sigma Academy" },
-      { title: "Central Limit Theorem Explained", youtubeId: "YAlJCEDD2oo", duration: "10:08", channel: "Khan Academy" },
+      { title: "Six Sigma Green Belt Full Course Training", youtubeId: "KfFez57ay6E", duration: "7:12:00", channel: "Simplilearn" },
+      { title: "Central Limit Theorem Explained", youtubeId: "JNm3M9cqWyc", duration: "10:08", channel: "Khan Academy" },
     ],
     quizQuestions: [
       {
@@ -491,8 +491,8 @@ Use overall (long-term) variation including between-subgroup variation. Reflects
 - Cpk = 2.00 → ~0.002 PPM defective (Six Sigma level)`,
     tools: ["Capability Study", "Histogram with Spec Limits", "Control Chart", "Normal Probability Plot"],
     videos: [
-      { title: "Process Capability Cp Cpk Explained", youtubeId: "kBfZ2sjOO0E", duration: "14:26", channel: "Lean Six Sigma Academy" },
-      { title: "Cp vs Cpk vs Pp vs Ppk — When to Use Which", youtubeId: "pPFTsKjNFhI", duration: "11:05", channel: "Quality Gurus" },
+      { title: "What is Process Capability Cp Cpk? Explained with Animated Examples", youtubeId: "33sfW_MJJpE", duration: "12:15", channel: "Digital E-Learning" },
+      { title: "What is the difference Between Cpk and Ppk?", youtubeId: "DgDOUFYDrio", duration: "8:40", channel: "Green Belt Academy" },
     ],
     quizQuestions: [
       {
@@ -577,8 +577,8 @@ Use overall (long-term) variation including between-subgroup variation. Reflects
 A confidence interval provides a range of plausible values for a population parameter. A 95% CI means: if we repeated the study 100 times, approximately 95 of those intervals would contain the true population parameter. It does NOT mean there is a 95% probability the true value is in the interval.`,
     tools: ["Hypothesis Testing Flowchart", "t-Test", "ANOVA", "Chi-Square Test", "Minitab/JMP"],
     videos: [
-      { title: "Hypothesis Testing — Complete Six Sigma Course", youtubeId: "0oc49DyA3hU", duration: "16:44", channel: "Lean Six Sigma Academy" },
-      { title: "p-Values Explained Simply", youtubeId: "ve0F00U8s2o", duration: "7:31", channel: "StatQuest" },
+      { title: "Understanding Hypothesis Testing in Six Sigma", youtubeId: "IpTyww3zpps", duration: "15:20", channel: "Lean Six Sigma Bureau" },
+      { title: "p-values: What they are and how to interpret them", youtubeId: "vemZtEM63GY", duration: "7:31", channel: "StatQuest with Josh Starmer" },
     ],
     quizQuestions: [
       {
@@ -651,8 +651,8 @@ RPN = Severity (S) × Occurrence (O) × Detection (D)
 The Pareto principle states that roughly 80% of effects come from 20% of causes. A Pareto chart is a bar chart ordered by frequency/magnitude with a cumulative percentage line. This helps prioritize which root causes to address first for maximum impact.`,
     tools: ["5 Whys", "Fishbone Diagram", "FMEA Worksheet", "Pareto Chart", "Fault Tree Analysis"],
     videos: [
-      { title: "Root Cause Analysis — 5 Whys, Fishbone, FMEA", youtubeId: "K5F5usS8qrU", duration: "14:52", channel: "Lean Six Sigma Academy" },
-      { title: "FMEA Complete Tutorial with Example", youtubeId: "8iGVKvYGqs4", duration: "20:11", channel: "Quality Gurus" },
+      { title: "Fishbone Diagram Or Ishikawa Diagram | Lean Six Sigma", youtubeId: "MTDWgv_f7s8", duration: "14:52", channel: "Anexas" },
+      { title: "Mastering FMEA | Failure Modes and Effects Analysis Explained", youtubeId: "EaD1qgsRNr0", duration: "20:11", channel: "Anexas" },
     ],
     quizQuestions: [
       {
@@ -727,8 +727,8 @@ Tests a carefully selected fraction of the full factorial. For example, a 2^(5-1
 4. Build a regression model: Y = β₀ + β₁A + β₂B + β₁₂AB + ...`,
     tools: ["Full Factorial Design", "Fractional Factorial Design", "Main Effects Plot", "Interaction Plot", "DOE Software (Minitab)"],
     videos: [
-      { title: "Design of Experiments (DOE) — Complete Six Sigma Course", youtubeId: "yOoXyMHLoEg", duration: "15:20", channel: "Lean Six Sigma Academy" },
-      { title: "Full Factorial DOE Tutorial with Minitab", youtubeId: "9BnLJfmOEHQ", duration: "18:45", channel: "Quality Gurus" },
+      { title: "Design of Experiment (DOE): Introduction, Terms and Concepts (PART 1)", youtubeId: "aWhIlCOImXg", duration: "18:15", channel: "LEARN & APPLY : Lean and Six Sigma" },
+      { title: "Introduction to Design of Experiments (DOE) Part 1", youtubeId: "H-c-GR0DIPM", duration: "18:45", channel: "Learn With Dr. Hakeem-Ur-Rehman" },
     ],
     quizQuestions: [
       {
@@ -809,8 +809,8 @@ Before full-scale implementation, conduct a pilot to:
 A good pilot plan defines: scope, duration, success criteria, data collection methods, and escalation procedures.`,
     tools: ["Pugh Matrix", "Impact-Effort Matrix", "Poka-Yoke Analysis", "Pilot Plan Template", "Cost-Benefit Analysis"],
     videos: [
-      { title: "Poka-Yoke (Mistake Proofing) Explained", youtubeId: "MXs3kFHmB0M", duration: "8:55", channel: "Lean Six Sigma Academy" },
-      { title: "Pugh Matrix Decision Making Tool", youtubeId: "GvhGQqzz_1g", duration: "11:30", channel: "Quality Gurus" },
+      { title: "Poka-Yoke | Mistake Proofing with Examples", youtubeId: "qALqGrzK140", duration: "8:55", channel: "AYT India Academy" },
+      { title: "Pugh matrix : A Decision / Selection Matrix", youtubeId: "DdgSMNKmUwE", duration: "11:30", channel: "Performance Management in Manufacturing" },
     ],
     quizQuestions: [
       {
@@ -891,8 +891,8 @@ A Control Plan is a living document that summarizes:
 - Reference documents (FMEA, process maps)`,
     tools: ["X̄-R Chart", "I-MR Chart", "p-Chart", "c-Chart", "Control Plan Template"],
     videos: [
-      { title: "Control Charts — Complete Six Sigma Guide", youtubeId: "cTe3V7jKu5I", duration: "17:38", channel: "Lean Six Sigma Academy" },
-      { title: "SPC Control Chart Selection and Examples", youtubeId: "GvhGQqzz_1g", duration: "13:22", channel: "Quality Gurus" },
+      { title: "What is a Control Chart? | Statistical Process Control (SPC)", youtubeId: "G0AFZUWvIDE", duration: "10:15", channel: "Green Belt Academy" },
+      { title: "Statistical Process Control (SPC) Explained | Control Charts", youtubeId: "aey2c0VsZNc", duration: "13:22", channel: "OSC & Management University" },
     ],
     quizQuestions: [
       {
@@ -977,8 +977,8 @@ Reduces a large number of correlated variables into fewer uncorrelated component
 - Creating composite indices from multiple correlated measures`,
     tools: ["Multiple Regression", "Logistic Regression", "Two-Way ANOVA", "Kruskal-Wallis Test", "PCA", "Minitab/JMP/StatGraphics"],
     videos: [
-      { title: "Multiple Regression Analysis — Six Sigma Black Belt", youtubeId: "x2TfLHNMLJc", duration: "19:30", channel: "Lean Six Sigma Academy" },
-      { title: "ANOVA Explained — Full Course", youtubeId: "uyrEocMvWXQ", duration: "22:15", channel: "StatQuest" },
+      { title: "Nonlinear Regression Analysis: illustration with Example in Excel", youtubeId: "XgBpv5GpgSE", duration: "19:30", channel: "LEARN & APPLY : Lean and Six Sigma" },
+      { title: "ANOVA: Crash Course Statistics", youtubeId: "oOuu8IBd-yo", duration: "22:15", channel: "CrashCourse" },
     ],
     quizQuestions: [
       {
@@ -1070,8 +1070,8 @@ The quadratic terms (xᵢ²) allow the model to capture curvature — essential 
 - **Ridge Analysis**: Follows the path of steepest ascent/descent from the current operating point toward the optimum`,
     tools: ["Fractional Factorial Design", "Central Composite Design", "Box-Behnken Design", "Contour Plot", "Desirability Function", "Minitab/JMP"],
     videos: [
-      { title: "Response Surface Methodology (RSM) — Complete Tutorial", youtubeId: "LL3QXCsXjI0", duration: "18:12", channel: "Quality Gurus" },
-      { title: "Advanced DOE — Fractional Factorial Designs", youtubeId: "a3o4eGbL2BM", duration: "14:50", channel: "Lean Six Sigma Academy" },
+      { title: "Response Surface Methodology (RSM) with Design Expert", youtubeId: "QWWgL3no9a0", duration: "18:12", channel: "Teaching Junction" },
+      { title: "Design of Experiment (DOE): Terms and Concepts (PART 2)", youtubeId: "pRdG01y-0rI", duration: "14:50", channel: "LEARN & APPLY : Lean and Six Sigma" },
     ],
     quizQuestions: [
       {
@@ -1167,9 +1167,9 @@ Intensive 3-5 day focused improvement workshops targeting specific process areas
 5. REPEAT — the constraint may have moved to a new location`,
     tools: ["Value Stream Map", "5S Audit Checklist", "Kanban Board", "Spaghetti Diagram", "TPM Metrics", "Bottleneck Analysis"],
     videos: [
-      { title: "Value Stream Mapping — Complete Tutorial", youtubeId: "V3VcoZ-6iyk", duration: "20:45", channel: "Lean Six Sigma Academy" },
-      { title: "Lean Manufacturing — 8 Wastes of Lean (TIMWOODS)", youtubeId: "TmMq1h1oZ4g", duration: "11:33", channel: "Simplilearn" },
-      { title: "5S Lean Training Complete Guide", youtubeId: "WJ6jR8Vn2kA", duration: "9:28", channel: "Lean Smarts" },
+      { title: "Value Stream Map - What is it? How do we use it?", youtubeId: "MVbZkRjNO4Q", duration: "20:45", channel: "Communication for Geeks" },
+      { title: "Funny Introduction To The 8 Wastes Of Lean Manufacturing", youtubeId: "c2nBKRKKWXk", duration: "11:33", channel: "Lean Smarts" },
+      { title: "Introduction to 5S Methodology Training - Lean Principles", youtubeId: "SODLdxMkVAM", duration: "9:28", channel: "Lean Smarts" },
     ],
     quizQuestions: [
       {
@@ -1243,8 +1243,8 @@ Each person must progress through all five stages. If someone is "stuck" at a pa
 Common sources of resistance: fear of the unknown, loss of control, concern about competence, past failed initiatives, organizational politics. Strategies: involve resistors early, listen empathetically, provide training, celebrate early adopters, address concerns with data.`,
     tools: ["Kotter's 8-Step Assessment", "ADKAR Diagnostic", "Stakeholder Power-Interest Grid", "NPV/ROI Calculator", "Force Field Analysis"],
     videos: [
-      { title: "Change Management for Six Sigma Projects", youtubeId: "yOoXyMHLoEg", duration: "15:18", channel: "Lean Six Sigma Academy" },
-      { title: "Kotter's 8-Step Change Model Explained", youtubeId: "JzP3EPdlFnM", duration: "8:44", channel: "Simplilearn" },
+      { title: "What is Change Management in Lean Six Sigma?", youtubeId: "gUZbxf3yEKo", duration: "15:18", channel: "Anexas" },
+      { title: "Kotter's 8-Step Change Model Explained", youtubeId: "iaz0jPLTTC4", duration: "8:44", channel: "Simplilearn" },
     ],
     quizQuestions: [
       {
@@ -1320,8 +1320,8 @@ Developed by Genichi Taguchi, the philosophy is to design products/processes tha
 - **Weibull Distribution**: Most versatile life distribution; shape parameter β indicates failure pattern (β < 1: infant mortality; β = 1: random; β > 1: wear-out)`,
     tools: ["House of Quality", "Taguchi Design", "Tolerance Stack-Up", "Monte Carlo Simulation", "Weibull Analysis", "FMEA (Design)"],
     videos: [
-      { title: "Design for Six Sigma (DFSS) Explained", youtubeId: "7FyaBq4Zr4A", duration: "12:30", channel: "Lean Six Sigma Academy" },
-      { title: "Quality Function Deployment (QFD) — House of Quality", youtubeId: "KGRwHCLLOKc", duration: "16:45", channel: "Quality Gurus" },
+      { title: "Statistical Tolerancing using Monte Carlo Simulation", youtubeId: "f4eEgNPGG0I", duration: "12:30", channel: "Institute of Quality and Reliability" },
+      { title: "Quality Function Deployment & the House of Quality", youtubeId: "iRMsd-X_e-0", duration: "16:45", channel: "Mister Simplify" },
     ],
     quizQuestions: [
       {

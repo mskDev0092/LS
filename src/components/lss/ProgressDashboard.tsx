@@ -6,13 +6,16 @@ import { useLearningStore } from "@/lib/store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import {
   Trophy, BookOpen, Play, Target, Clock, CheckCircle2,
-  TrendingUp, Award, BarChart3
+  TrendingUp, Award, BarChart3, Trash2, AlertCircle
 } from "lucide-react";
+import { useState } from "react";
 
 export function ProgressDashboard() {
-  const { moduleProgress, quizResults } = useLearningStore();
+  const { moduleProgress, quizResults, clearAllProgress } = useLearningStore();
+  const [confirmReset, setConfirmReset] = useState(false);
 
   const totalModules = modules.length;
   const completedModules = Object.values(moduleProgress).filter((p) => p.completed).length;
@@ -205,6 +208,54 @@ export function ProgressDashboard() {
               </p>
             </CardContent>
           </Card>
+        </motion.div>
+
+        {/* Reset progress action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-8 flex justify-center"
+        >
+          {confirmReset ? (
+            <div className="flex items-center gap-3 p-4 rounded-xl border border-red-500/20 bg-red-500/5 max-w-md w-full justify-between animate-in fade-in zoom-in-95 duration-200">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+                <span className="text-xs font-medium text-red-200">Reset all progress? This cannot be undone.</span>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setConfirmReset(false)}
+                  className="h-8 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => {
+                    clearAllProgress();
+                    setConfirmReset(false);
+                  }}
+                  className="h-8 text-xs bg-red-600 hover:bg-red-500 text-white"
+                >
+                  Yes, Reset
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setConfirmReset(true)}
+              className="text-xs text-muted-foreground hover:text-red-400 hover:border-red-500/30 transition-all gap-1.5"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Reset All Course Progress
+            </Button>
+          )}
         </motion.div>
       </div>
     </section>
