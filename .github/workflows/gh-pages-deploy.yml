@@ -21,8 +21,13 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install system dependencies (for sharp/libvips)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential python3 make g++ libvips-dev
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --silent
 
       - name: Compute GH_PAGES_BASE_PATH
         run: |
@@ -38,6 +43,17 @@ jobs:
           GH_PAGES_BASE_PATH: ${{ env.GH_PAGES_BASE_PATH }}
         run: |
           npm run build:export
+
+      - name: Verify `out/` exists
+        run: |
+          if [ -d ./out ]; then
+            echo "Export successful, out/ present";
+            ls -la ./out | sed -n '1,200p'
+          else
+            echo "Export failed: ./out not found";
+            ls -la || true;
+            exit 1;
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
